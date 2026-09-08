@@ -15,11 +15,15 @@ public class List {
      * @param value
      */
     public void add(int value){
-        ListItem twinHead = this.head;
-        while(this.head != null){
+        if(this.head == null){
+            this.head = new ListItem(value);
+        }else{
+            ListItem twinHead = this.head;
+        while(twinHead.getNext() != null){
             twinHead = twinHead.getNext();
         }
         twinHead.setNext(new ListItem(value));
+        }
     }
 
     /**
@@ -35,11 +39,16 @@ public class List {
      */
     public int size(){
         int index = 0;
-        while(this.head != null){
-            this.head = this.head.getNext();
+        if(this.head == null){
+            return index;
+        }else{
+            ListItem twinHead = this.head;
+        while(twinHead.getNext() != null){
+            twinHead = twinHead.getNext();
             index++;
         }
         return index;
+        }
     }
 
     /*public String toString(){
