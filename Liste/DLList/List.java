@@ -1,6 +1,6 @@
-package Liste;
+package Liste.DLList;
+
 public class List {
-    //Attributes
     private ListItem head;
 
     //Constructor
@@ -17,12 +17,20 @@ public class List {
     public void add(int value){
         if(this.head == null){
             this.head = new ListItem(value);
+        }else if (this.head.getNext() == null) {
+            this.head.setNext(new ListItem(value));
         }else{
-            ListItem cur = this.head;
+            ListItem cur = this.head.getNext();
+            ListItem cur2 = this.head;
+
         while(cur.getNext() != null){
+            cur2 = cur;
             cur = cur.getNext();
         }
+
         cur.setNext(new ListItem(value));
+        cur.getNext().setPrev(cur2);
+
         }
     }
 
@@ -59,17 +67,17 @@ public class List {
             this.head = new ListItem(value);
             this.head.setNext(tempHead);
         }else{
-            ListItem cur = this.head.getNext();
+            ListItem cur = this.head;
             ListItem cur2 = this.head;
-
             while (cur != null && cur.getValue() < value ) {
-                cur2 = cur;
                 cur = cur.getNext();
             }
 
-            cur2.setNext(new ListItem(value));
-            cur2 = cur2.getNext();
-            cur2.setNext(cur);
+            cur.getPrev().setNext(new ListItem(value));
+            cur.getPrev().getNext().setNext(cur);
+            cur.getPrev().getNext().setPrev(cur.getPrev());
+            cur.setPrev(cur.getPrev().getNext());
+
         }
     }
 
@@ -99,14 +107,26 @@ public class List {
             String finalString = "";
             ListItem cur = head;
             while(cur != null){
+
                 if(cur.getNext() == null){
-                    finalString += "Value: " + cur.getValue() + " Next: null" + "\n";
-            }else{
-                finalString += "Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-            }
+                    if(cur.getPrev() == null){
+                        finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: null" + "\n";
+                    }else{
+                        finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: null" + "\n";
+                    }
+
+                }else if (cur.getPrev() == null) {
+                    finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
+
+                }else{
+                finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
+                }
+
                 cur = cur.getNext();
             }
             return finalString;
         }
+
     }
 }
+
