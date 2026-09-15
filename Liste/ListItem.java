@@ -31,4 +31,12 @@ public class ListItem {
     public ListItem getNext(){
         return this.next;
     }
+
+    /*public String toString(){
+        if(this.next == null){
+            return "Value: " + this.value + " Next: null" + "\n";
+        }else{
+            return "Value: " + this.value + " Next: " + this.next.value + "\n";
+        }
+    }*/
 }
