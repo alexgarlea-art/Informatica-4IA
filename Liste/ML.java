@@ -9,10 +9,11 @@ public class ML {
         list.add(6);
         list.add(7);
 
-        list.insert(new ListItem(8));
+        list.insert(8);
+        list.insert(1);
 
-        list.remove(new ListItem(8));
-
+        list.remove(8);
+        
         System.out.println(list.toString());
         System.out.println(list.size());
     }

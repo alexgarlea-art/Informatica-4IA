@@ -51,36 +51,38 @@ public class List {
         }
     }
 
-    public void insert(ListItem toIns){
+    public void insert(int toIns){
         if (this.head == null){
-            this.head = toIns;
-        }else if (this.head.getValue() > toIns.getValue()){
-            toIns.setNext(this.head);
-            this.head = toIns;
+            this.head = new ListItem(toIns);
+        }else if (this.head.getValue() > toIns){
+            ListItem tempHead = this.head;
+            this.head = new ListItem(toIns);
+            this.head.setNext(tempHead);
         }else{
             ListItem cur = this.head.getNext();
             ListItem cur2 = this.head;
 
-            while (cur != null && cur.getValue() < toIns.getValue()  ) {
+            while (cur != null && cur.getValue() < toIns ) {
                 cur2 = cur;
                 cur = cur.getNext();
             }
 
-            cur2.setNext(toIns);
-            toIns.setNext(cur);
+            cur2.setNext(new ListItem(toIns));
+            cur2 = cur2.getNext();
+            cur2.setNext(cur);
         }
     }
 
-    public void remove(ListItem rm){
+    public void remove(int rm){
         if(this.head == null){
             System.out.println("List Empty, nothing to remove.");
-        }else if (this.head.getValue() == rm.getValue()) {
+        }else if (this.head.getValue() == rm) {
             this.head = this.head.getNext();
         }{
             ListItem cur = this.head.getNext();
             ListItem cur2 = this.head;
 
-            while (cur != null && cur.getValue() != rm.getValue()  ) {
+            while (cur != null && cur.getValue() != rm)  {
                 cur2 = cur;
                 cur = cur.getNext();
             }
