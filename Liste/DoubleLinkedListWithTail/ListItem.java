@@ -1,5 +1,7 @@
-package Liste;
+package Liste.DoubleLinkedListWithTail;
+
 public class ListItem {
+    private ListItem prev;
     private int value;
     private ListItem next;
 
@@ -32,11 +34,11 @@ public class ListItem {
         return this.next;
     }
 
-    /*public String toString(){
-        if(this.next == null){
-            return "Value: " + this.value + " Next: null" + "\n";
-        }else{
-            return "Value: " + this.value + " Next: " + this.next.value + "\n";
-        }
-    }*/
+    public ListItem getPrev(){
+        return this.prev;
+    }
+
+    public void setPrev(ListItem prev){
+        this.prev = prev;
+    }
 }

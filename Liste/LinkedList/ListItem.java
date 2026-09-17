@@ -1,7 +1,5 @@
-package Liste.DLList;
-
+package Liste.LinkedList;
 public class ListItem {
-    private ListItem prev;
     private int value;
     private ListItem next;
 
@@ -34,11 +32,11 @@ public class ListItem {
         return this.next;
     }
 
-    public ListItem getPrev(){
-        return this.prev;
-    }
-
-    public void setPrev(ListItem prev){
-        this.prev = prev;
-    }
+    /*public String toString(){
+        if(this.next == null){
+            return "Value: " + this.value + " Next: null" + "\n";
+        }else{
+            return "Value: " + this.value + " Next: " + this.next.value + "\n";
+        }
+    }*/
 }

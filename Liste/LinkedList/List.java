@@ -1,4 +1,4 @@
-package Liste;
+package Liste.LinkedList;
 public class List {
     //Attributes
     private ListItem head;
@@ -78,7 +78,7 @@ public class List {
             System.out.println("List Empty, nothing to remove.");
         }else if (this.head.getValue() == value) {
             this.head = this.head.getNext();
-        }{
+        }else{
             ListItem cur = this.head.getNext();
             ListItem cur2 = this.head;
 
@@ -86,8 +86,12 @@ public class List {
                 cur2 = cur;
                 cur = cur.getNext();
             }
-
-            cur2.setNext(cur.getNext());
+            if(cur != null){
+                cur2.setNext(cur.getNext());
+            }else{
+                System.out.println("Value not found, nothing to remove.");
+            }
+            
         }
     }
 
