@@ -76,14 +76,18 @@ public class List {
      * @param value the value to add
      */
     public void insert(int index, int value){
-        ListItem cur = this.head;
+        if(index <= 0){
+            this.addHead(value);
+        }else if(this.head == null){
+            System.out.println("List Empty, impossible to insert in index " + index + ".");
+        }else{
+            ListItem cur = this.head;
         boolean indexInRange = true;
         for(int i = 0; i < index; i++){
             if(cur.getNext() != null){
                 cur = cur.getNext();
             }else{
-                indexInRange = false;
-                System.out.println("Index " + index + " out of list bounds.");
+                this.addTail(value);
                 break;
             }
         }
@@ -94,47 +98,75 @@ public class List {
             cur.getPrev().getNext().setPrev(cur.getPrev());
             cur.setPrev(cur.getPrev().getNext());
         }
+        }
         
     }   
 
-    public void remove(int value){
+    public int removeHead(){
         if(this.head == null){
-            System.out.println("List Empty, nothing to remove.");
-        }else if (this.head.getValue() == value) {
-            if(this.head.getNext() == null){
-                this.head = null;
-            }else{
-                this.head = this.head.getNext();
-                this.head.setPrev(null);
-            }
+            System.out.println("Nothing to remove, returning -1");
+            return -1;
+        }else if(this.head.getNext() == null){
+            int headValue = this.head.getValue();
+            this.head = null;
+            this.tail = null;
+            return headValue;
+        }else{
+            int headValue = this.head.getValue();
+            this.head = this.head.getNext();
+            this.head.setPrev(null);
+            return headValue;
+        }
+        
+    }
+
+    public int removeTail(){
+        if(this.tail == null){
+            System.out.println("Nothing to remove, returning -1");
+            return -1;
+        }else if(this.tail.getPrev() == null){
+            int tailValue = this.tail.getValue();
+            this.tail = null;
+            this.head = null;
+            return tailValue;
+        }else{
+            int tailValue = this.tail.getValue();
+            this.tail = this.tail.getPrev();
+            this.tail.setNext(null);
+            return tailValue;
+        }
+    }
+
+    public void remove(int index){
+      if(index <= 0){
+            this.removeHead();
+        }else if(this.head == null){
+            System.out.println("List Empty, impossible to insert in index " + index + ".");
         }else{
             ListItem cur = this.head;
-
-            while (cur != null && cur.getValue() != value)  {
+        boolean indexInRange = true;
+        for(int i = 0; i < index; i++){
+            if(cur.getNext() != null){
                 cur = cur.getNext();
-            }
-
-            if(cur != null){
-                if(cur.getNext() != null){
-                    cur.getPrev().setNext(cur.getNext());
-                    cur.getNext().setPrev(cur.getPrev());
-                    cur.setPrev(null);
-                    cur.setNext(null);
-                }else{
-                    cur.getPrev().setNext(null);
-                    cur.setPrev(null);
-                }
             }else{
-                System.out.println("Value not found, nothing to remove.");
+                this.removeTail();
+                break;
             }
-
+        }
+        if(indexInRange){
+            cur.getPrev().setNext(new ListItem(value));
+            cur.getPrev().getNext().setNext(cur);
+            cur.getPrev().setPrev(cur.getPrev());
+            cur.getPrev().getNext().setPrev(cur.getPrev());
+            cur.setPrev(cur.getPrev().getNext());
+        }
         }
     }
 
     @Override 
     public String toString(){
         if(this.head == null){
-            return "The list is Empty";
+            return "Head: null \nTail: null";
         }else{
 
             String finalString = "";
