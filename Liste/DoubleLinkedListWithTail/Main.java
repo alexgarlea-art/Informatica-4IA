@@ -10,7 +10,7 @@ public class Main {
 
         list.removeHead();
 
-        System.out.println(list.toString());
+        System.out.println(list);
     } 
 
 }

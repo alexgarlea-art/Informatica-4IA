@@ -4,208 +4,280 @@ public class List {
     private ListItem head;
     private ListItem tail;
 
-    //Constructor
-    public List(){
+    // Constructor
+    public List() {
     }
 
-    //Methods
-    /**
-     * Adds a new ListItem to the existing List
-     * @param value
-     */
-    public void addTail(int value){
-        if(this.head == null){
-
-            this.head = new ListItem(value);
-            this.tail = this.head;
-
-        }else{
-
-        this.tail.setNext(new ListItem(value));
-        this.tail.getNext().setPrev(this.tail);
-        this.tail = this.tail.getNext();
-
-        }
-       
-    }
+    // Methods
 
     /**
-     * Makes value the new head, adding it to the top of the list
-     * @param value ListItem to add
+     * Adds a new ListItem to the end of the List
+     *
+     * @param value value to add
      */
-    public void addHead(int value){
-        if(this.head == null){
+    public void addTail(int value) {
+        if (this.head == null) {
             this.head = new ListItem(value);
             this.tail = this.head;
-        }else{
-            ListItem cur = new ListItem(value);
-            this.head.setPrev(cur);
-            cur.setNext(this.head);
-            this.head = cur;
+        } else {
+            ListItem newItem = new ListItem(value);
+
+            this.tail.setNext(newItem);
+            newItem.setPrev(this.tail);
+
+            this.tail = newItem;
         }
     }
-    
+
+    /**
+     * Adds a new ListItem to the beginning of the List
+     *
+     * @param value value to add
+     */
+    public void addHead(int value) {
+        if (this.head == null) {
+            this.head = new ListItem(value);
+            this.tail = this.head;
+        } else {
+            ListItem newItem = new ListItem(value);
+
+            newItem.setNext(this.head);
+            this.head.setPrev(newItem);
+
+            this.head = newItem;
+        }
+    }
+
     /**
      * Checks if the list is empty
+     *
      * @return true if the list is empty, false otherwise
      */
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.head == null;
     }
 
     /**
      * @return the size of the list
      */
-    public int size(){
-        if(this.head == null){
-            return 0;
-        }else{
-            int index = 1;
-            ListItem cur = this.head;
-        while(cur.getNext() != null){
-            index++;
+    public int size() {
+        int size = 0;
+        ListItem cur = this.head;
+
+        while (cur != null) {
+            size++;
             cur = cur.getNext();
         }
-        return index;
-        }
+
+        return size;
     }
 
     /**
-     * inserts value to pos index in the list
-     * @param index idex where to insert value
-     * @param value the value to add
+     * Inserts value at index in the list.
+     *
+     * @param index index where to insert value
+     * @param value value to add
      */
-    public void insert(int index, int value){
-        if(index <= 0){
+    public void insert(int index, int value) {
+        if (index <= 0) {
             this.addHead(value);
-        }else if(this.head == null){
-            System.out.println("List Empty, impossible to insert in index " + index + ".");
-        }else{
-            ListItem cur = this.head;
-        boolean indexInRange = true;
-        for(int i = 0; i < index; i++){
-            if(cur.getNext() != null){
-                cur = cur.getNext();
-            }else{
-                this.addTail(value);
-                break;
-            }
+            return;
         }
-        if(indexInRange){
-            cur.getPrev().setNext(new ListItem(value));
-            cur.getPrev().getNext().setNext(cur);
-            cur.getPrev().setPrev(cur.getPrev());
-            cur.getPrev().getNext().setPrev(cur.getPrev());
-            cur.setPrev(cur.getPrev().getNext());
-        }
-        }
-        
-    }   
 
-    public int removeHead(){
-        if(this.head == null){
+        if (this.head == null) {
+            System.out.println(
+                "List Empty, impossible to insert in index " + index + "."
+            );
+            return;
+        }
+
+        ListItem cur = this.head;
+
+        for (int i = 0; i < index; i++) {
+            if (cur.getNext() == null) {
+                this.addTail(value);
+                return;
+            }
+
+            cur = cur.getNext();
+        }
+
+        ListItem newItem = new ListItem(value);
+        ListItem previous = cur.getPrev();
+
+        newItem.setPrev(previous);
+        newItem.setNext(cur);
+
+        previous.setNext(newItem);
+        cur.setPrev(newItem);
+    }
+
+    /**
+     * Removes and returns the first item in the list.
+     *
+     * @return removed value, or -1 if the list is empty
+     */
+    public int removeHead() {
+        if (this.head == null) {
             System.out.println("Nothing to remove, returning -1");
             return -1;
-        }else if(this.head.getNext() == null){
-            int headValue = this.head.getValue();
+        }
+
+        int headValue = this.head.getValue();
+
+        if (this.head.getNext() == null) {
             this.head = null;
             this.tail = null;
-            return headValue;
-        }else{
-            int headValue = this.head.getValue();
+        } else {
             this.head = this.head.getNext();
             this.head.setPrev(null);
-            return headValue;
         }
-        
+
+        return headValue;
     }
 
-    public int removeTail(){
-        if(this.tail == null){
+    /**
+     * Removes and returns the last item in the list.
+     *
+     * @return removed value or -1 if the list is empty
+     */
+    public int removeTail() {
+        if (this.tail == null) {
             System.out.println("Nothing to remove, returning -1");
             return -1;
-        }else if(this.tail.getPrev() == null){
-            int tailValue = this.tail.getValue();
-            this.tail = null;
+        }
+
+        int tailValue = this.tail.getValue();
+
+        if (this.tail.getPrev() == null) {
             this.head = null;
-            return tailValue;
-        }else{
-            int tailValue = this.tail.getValue();
+            this.tail = null;
+        } else {
             this.tail = this.tail.getPrev();
             this.tail.setNext(null);
-            return tailValue;
         }
+
+        return tailValue;
     }
 
-    public void remove(int index){
-      if(index <= 0){
+    /**
+     * Removes the item at index.
+     *
+     * @param index of the item to remove
+     */
+    public void remove(int index) {
+        if (this.head == null) {
+            System.out.println(
+                "List Empty, impossible to remove in index " + index + "."
+            );
+            return;
+        }
+
+        if (index <= 0) {
             this.removeHead();
-        }else if(this.head == null){
-            System.out.println("List Empty, impossible to insert in index " + index + ".");
-        }else{
-            ListItem cur = this.head;
-        boolean indexInRange = true;
-        for(int i = 0; i < index; i++){
-            if(cur.getNext() != null){
-                cur = cur.getNext();
-            }else{
-                this.removeTail();
-                break;
-            }
+            return;
         }
-        if(indexInRange){
-            cur.getPrev().setNext(new ListItem(value));
-            cur.getPrev().getNext().setNext(cur);
-            cur.getPrev().setPrev(cur.getPrev());
-            cur.getPrev().getNext().setPrev(cur.getPrev());
-            cur.setPrev(cur.getPrev().getNext());
+
+        ListItem cur = this.head;
+
+        for (int i = 0; i < index && cur.getNext() != null; i++) {
+            cur = cur.getNext();
         }
+
+        if (cur == this.tail) {
+            this.removeTail();
+            return;
         }
+
+        ListItem previous = cur.getPrev();
+        ListItem next = cur.getNext();
+
+        previous.setNext(next);
+        next.setPrev(previous);
     }
 
-    @Override 
-    public String toString(){
-        if(this.head == null){
-            return "Head: null \nTail: null";
-        }else{
-
-            String finalString = "";
-            ListItem cur = head;
-
-            if(this.head != null){
-                finalString += "Head: " + this.head.getValue() + "\n";
-            }else{
-                finalString += "Head: null" + "\n";
-            }
-
-            if (this.tail != null) {
-                finalString += "Tail: " + this.tail.getValue() + "\n";
-            }else{
-                finalString += "Tail: null" + "\n";
-            }
-            
-            
-
-            while(cur != null){
-
-                if(cur.getNext() == null){
-                    if(cur.getPrev() == null){
-                        finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: null" + "\n";
-                    }else{
-                        finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: null" + "\n";
-                    }
-
-                }else if (cur.getPrev() == null) {
-                    finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-
-                }else{
-                finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-                }
-
-                cur = cur.getNext();
-            }
-            return finalString;
+    /**
+     * Returns the value at the specified index.
+     *
+     * @param index index of the item
+     * @return value at the index
+     */
+    public int get(int index) {
+        if (this.head == null) {
+            System.out.println(
+                "List Empty, impossible to get index " + index + ". Returning 0."
+            );
+            return 0;
         }
 
+        if (index <= 0) {
+            return this.head.getValue();
+        }
+
+        ListItem cur = this.head;
+
+        for (int i = 0; i < index && cur.getNext() != null; i++) {
+            cur = cur.getNext();
+        }
+
+        return cur.getValue();
+    }
+
+    /**
+     * Converts the list to an array.
+     *
+     * @return array containing all list values, or null if empty
+     */
+    public int[] toArray() {
+        int size = this.size();
+
+        if (size == 0) {
+            System.out.println("List empty, nothing to return.");
+            return null;
+        }
+
+        int[] arr = new int[size];
+        ListItem cur = this.head;
+
+        for (int i = 0; i < size; i++) {
+            arr[i] = cur.getValue();
+            cur = cur.getNext();
+        }
+
+        return arr;
+    }
+
+    @Override
+    public String toString() {
+        if (this.head == null) {
+            return "Head: null \nTail: null";
+        }
+
+        String finalString = "";
+
+        finalString += "Head: " + this.head.getValue() + "\n";
+        finalString += "Tail: " + this.tail.getValue() + "\n";
+
+        ListItem cur = this.head;
+
+        while (cur != null) {
+            if (cur.getPrev() == null) {
+                finalString += "Prev: null ";
+            } else {
+                finalString += "Prev: " + cur.getPrev().getValue() + " ";
+            }
+
+            finalString += "Value: " + cur.getValue() + " ";
+
+            if (cur.getNext() == null) {
+                finalString += "Next: null\n";
+            } else {
+                finalString += "Next: " + cur.getNext().getValue() + "\n";
+            }
+
+            cur = cur.getNext();
+        }
+
+        return finalString;
     }
 }
