@@ -1,6 +1,6 @@
 package Liste.SDDL;
 
-public class Stack<T> extends List{
+public class Stack<T> extends List<T>{
 
     //Constructor
     /**
@@ -11,7 +11,10 @@ public class Stack<T> extends List{
 
     //Methods
     public void Push(T value){
-        ListItem<T> toAdd = new ListItem<T>(value);
-        this.addHead();
+        this.addTail(value);
+    }
+
+    public T pop(){
+        return this.removeTail();
     }
 }
