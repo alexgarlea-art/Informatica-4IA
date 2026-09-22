@@ -41,4 +41,19 @@ public class ListItem {
     public void setPrev(ListItem prev){
         this.prev = prev;
     }
+
+    @Override 
+    public String toString(){
+    if(this.getNext() == null){
+        if(this.getPrev() == null){
+        return "Prev: null " + " Value: " + this.getValue() + " Next: null" + "\n";
+        }else{
+            return "Prev: " + this.getPrev().getValue() + " Value: " + this.getValue() + " Next: null" + "\n";
+        }
+    }else if (this.getPrev() == null) {
+        return "Prev: null " + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
+    }else{
+        return "Prev: " + this.getPrev().getValue() + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
+    }
+    }
 }

@@ -119,7 +119,24 @@ public class List {
 
         }
     }
-
+    
+    public void clear(){
+        if(head == null){
+            System.out.println("The list is empty.");
+        }else{
+            ListItem cur = this.head;
+            while(cur != null){
+                if(cur.getPrev() != null){
+                    cur.setPrev(null);
+                }
+                if(cur.getNext() != null){
+                cur = cur.getNext();
+                cur.getPrev().setNext(null);
+                }
+            }
+            System.out.println("the list is clear.");
+        }
+    }
     @Override 
     public String toString(){
         if(this.head == null){
@@ -128,21 +145,7 @@ public class List {
             String finalString = "";
             ListItem cur = head;
             while(cur != null){
-
-                if(cur.getNext() == null){
-                    if(cur.getPrev() == null){
-                        finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: null" + "\n";
-                    }else{
-                        finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: null" + "\n";
-                    }
-
-                }else if (cur.getPrev() == null) {
-                    finalString += "Prev: null " + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-
-                }else{
-                finalString += "Prev: " + cur.getPrev().getValue() + " Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-                }
-
+                finalString += cur.toString();
                 cur = cur.getNext();
             }
             return finalString;

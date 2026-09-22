@@ -103,11 +103,7 @@ public class List {
             String finalString = "";
             ListItem cur = head;
             while(cur != null){
-                if(cur.getNext() == null){
-                    finalString += "Value: " + cur.getValue() + " Next: null" + "\n";
-            }else{
-                finalString += "Value: " + cur.getValue() + " Next: " + cur.getNext().getValue() + "\n";
-            }
+                finalString += cur.toString();
                 cur = cur.getNext();
             }
             return finalString;

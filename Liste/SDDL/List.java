@@ -1,11 +1,11 @@
-package Liste.DoubleLinkedListWithTail;
+package Liste.SDDL;
 
-public class List {
-    private ListItem head;
-    private ListItem tail;
+public class List<T> {
+    private ListItem<T> head;
+    private ListItem<T> tail;
 
     // Constructor
-    public List() {
+    protected List() {
     }
 
     // Methods
@@ -15,12 +15,12 @@ public class List {
      *
      * @param value value to add
      */
-    public void addTail(int value) {
+    protected void addTail(T value) {
         if (this.head == null) {
-            this.head = new ListItem(value);
+            this.head = new ListItem<T>(value);
             this.tail = this.head;
         } else {
-            ListItem newItem = new ListItem(value);
+            ListItem<T> newItem = new ListItem<T>(value);
 
             this.tail.setNext(newItem);
             newItem.setPrev(this.tail);
@@ -34,12 +34,12 @@ public class List {
      *
      * @param value value to add
      */
-    public void addHead(int value) {
+    protected void addHead(T value) {
         if (this.head == null) {
-            this.head = new ListItem(value);
+            this.head = new ListItem<T>(value);
             this.tail = this.head;
         } else {
-            ListItem newItem = new ListItem(value);
+            ListItem<T> newItem = new ListItem<T>(value);
 
             newItem.setNext(this.head);
             this.head.setPrev(newItem);
@@ -62,7 +62,7 @@ public class List {
      */
     public int size() {
         int size = 0;
-        ListItem cur = this.head;
+        ListItem<T> cur = this.head;
 
         while (cur != null) {
             size++;
@@ -78,7 +78,7 @@ public class List {
      * @param index index where to insert value
      * @param value value to add
      */
-    public void insert(int index, int value) {
+    protected void insert(int index, T value) {
         if (index <= 0) {
             this.addHead(value);
             return;
@@ -91,7 +91,7 @@ public class List {
             return;
         }
 
-        ListItem cur = this.head;
+        ListItem<T> cur = this.head;
 
         for (int i = 0; i < index; i++) {
             if (cur.getNext() == null) {
@@ -102,8 +102,8 @@ public class List {
             cur = cur.getNext();
         }
 
-        ListItem newItem = new ListItem(value);
-        ListItem previous = cur.getPrev();
+        ListItem<T> newItem = new ListItem<T>(value);
+        ListItem<T> previous = cur.getPrev();
 
         newItem.setPrev(previous);
         newItem.setNext(cur);
@@ -117,13 +117,13 @@ public class List {
      *
      * @return removed value, or -1 if the list is empty
      */
-    public int removeHead() {
+    protected T removeHead() {
         if (this.head == null) {
-            System.out.println("Nothing to remove, returning -1");
-            return -1;
+            System.out.println("Nothing to remove, returning null");
+            return null;
         }
 
-        int headValue = this.head.getValue();
+        T headValue = this.head.getValue();
 
         if (this.head.getNext() == null) {
             this.head = null;
@@ -141,13 +141,13 @@ public class List {
      *
      * @return removed value or -1 if the list is empty
      */
-    public int removeTail() {
+    protected T removeTail() {
         if (this.tail == null) {
-            System.out.println("Nothing to remove, returning -1");
-            return -1;
+            System.out.println("Nothing to remove, returning null");
+            return null;
         }
 
-        int tailValue = this.tail.getValue();
+        T tailValue = this.tail.getValue();
 
         if (this.tail.getPrev() == null) {
             this.head = null;
@@ -165,7 +165,7 @@ public class List {
      *
      * @param index of the item to remove
      */
-    public void remove(int index) {
+    protected void remove(int index) {
         if (this.head == null) {
             System.out.println(
                 "List Empty, impossible to remove in index " + index + "."
@@ -178,7 +178,7 @@ public class List {
             return;
         }
 
-        ListItem cur = this.head;
+        ListItem<T> cur = this.head;
 
         for (int i = 0; i < index && cur.getNext() != null; i++) {
             cur = cur.getNext();
@@ -189,21 +189,21 @@ public class List {
             return;
         }
 
-        ListItem previous = cur.getPrev();
-        ListItem next = cur.getNext();
+        ListItem<T> previous = cur.getPrev();
+        ListItem<T> next = cur.getNext();
 
         previous.setNext(next);
         next.setPrev(previous);
     }
-
-        /**
+    
+    /**
      * Clears the list
      */
     public void clear(){
         if(head == null){
             System.out.println("The list is empty.");
         }else{
-            ListItem cur = this.head;
+            ListItem<T> cur = this.head;
             while(cur != null){
                 if(cur.getPrev() != null){
                     cur.setPrev(null);
@@ -223,19 +223,19 @@ public class List {
      * @param index index of the item
      * @return value at the index
      */
-    public int get(int index) {
+    public T get(int index) {
         if (this.head == null) {
             System.out.println(
-                "List Empty, impossible to get index " + index + ". Returning 0."
+                "List Empty, impossible to get index " + index + ". Returning null."
             );
-            return 0;
+            return null;
         }
 
         if (index <= 0) {
             return this.head.getValue();
         }
 
-        ListItem cur = this.head;
+        ListItem<T> cur = this.head;
 
         for (int i = 0; i < index && cur.getNext() != null; i++) {
             cur = cur.getNext();
@@ -244,12 +244,15 @@ public class List {
         return cur.getValue();
     }
 
+
+     
     /**
      * Converts the list to an array.
      *
      * @return array containing all list values, or null if empty
      */
-    public int[] toArray() {
+    /* 
+    public T[] toArray() {
         int size = this.size();
 
         if (size == 0) {
@@ -257,8 +260,8 @@ public class List {
             return null;
         }
 
-        int[] arr = new int[size];
-        ListItem cur = this.head;
+        T[] arr = new T[size];
+        ListItem<T> cur = this.head;
 
         for (int i = 0; i < size; i++) {
             arr[i] = cur.getValue();
@@ -266,7 +269,7 @@ public class List {
         }
 
         return arr;
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -279,7 +282,7 @@ public class List {
         finalString += "Head: " + this.head.getValue() + "\n";
         finalString += "Tail: " + this.tail.getValue() + "\n";
 
-        ListItem cur = this.head;
+        ListItem<T> cur = this.head;
 
         while (cur != null) {
             finalString += cur.toString();

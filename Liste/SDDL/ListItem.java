@@ -1,13 +1,13 @@
-package Liste.DoubleLinkedListWithTail;
+package Liste.SDDL;
 
-public class ListItem {
-    private ListItem prev;
-    private int value;
-    private ListItem next;
+public class ListItem<T> {
+    private ListItem<T> prev;
+    private T value;
+    private ListItem<T> next;
 
 
     //constructor
-    public ListItem(int value){
+    public ListItem(T value){
         this.value = value;
     }
 
@@ -15,7 +15,7 @@ public class ListItem {
     /**
      * @return the item's value
      */
-    public int getValue(){
+    public T getValue(){
         return this.value;
     }
 
@@ -23,22 +23,22 @@ public class ListItem {
      * sets the current next item
      * @param next
      */
-    public void setNext(ListItem next){
+    public void setNext(ListItem<T> next){
         this.next = next;
     }
 
     /**
      * @return next
      */
-    public ListItem getNext(){
+    public ListItem<T> getNext(){
         return this.next;
     }
 
-    public ListItem getPrev(){
+    public ListItem<T> getPrev(){
         return this.prev;
     }
 
-    public void setPrev(ListItem prev){
+    public void setPrev(ListItem<T> prev){
         this.prev = prev;
     }
 
