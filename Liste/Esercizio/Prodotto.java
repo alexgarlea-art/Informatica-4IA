@@ -64,10 +64,12 @@ public class Prodotto implements Comparable<Prodotto>{
 
     @Override
     public int compareTo(Prodotto o) {
-        // TODO Auto-generated method stub
-        return 0;
+        if (this.getGenere() == o.getGenere()){
+            return 0;
+        }
+        
     }
-    
+
     @Override 
     public String toString(){
     if(this.getNext() == null){
