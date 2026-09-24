@@ -6,6 +6,7 @@ public class Queue<T> extends List<T>{
      * Creates a new Queue
      */
     public Queue(){
+        super();
     }
 
     /**

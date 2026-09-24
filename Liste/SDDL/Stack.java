@@ -7,6 +7,7 @@ public class Stack<T> extends List<T>{
      * Creates a Stack, a dynamic data structure where you can only add and remove from the top element
      */
     public Stack(){
+        super();
     }
 
     //Methods
