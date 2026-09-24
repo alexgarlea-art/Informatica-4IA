@@ -62,10 +62,12 @@ public class Prodotto implements Comparable<Prodotto>{
         return this.name + ", " + this.genere;
     }
 
-    public void test(){
-        System.out.println(this.compareTo(this.getNext()));
+    @Override
+    public int compareTo(Prodotto o) {
+        // TODO Auto-generated method stub
+        return 0;
     }
-
+    
     @Override 
     public String toString(){
     if(this.getNext() == null){
