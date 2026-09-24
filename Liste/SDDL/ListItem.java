@@ -50,10 +50,10 @@ public class ListItem<T> {
         }else{
             return "Prev: " + this.getPrev().getValue() + " Value: " + this.getValue() + " Next: null" + "\n";
         }
-    }else if (this.getPrev() == null) {
-        return "Prev: null " + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
-    }else{
-        return "Prev: " + this.getPrev().getValue() + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
-    }
+        }else if (this.getPrev() == null) {
+            return "Prev: null " + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
+        }else{
+            return "Prev: " + this.getPrev().getValue() + " Value: " + this.getValue() + " Next: " + this.getNext().getValue() + "\n";
+        }
     }
 }
