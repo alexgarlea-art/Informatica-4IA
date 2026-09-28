@@ -190,43 +190,49 @@ public class OrdinableList {
     }
 
     public void sort(){
-        if (this.head == null){
-            System.out.println("List empty, nothing to sort.");
-        }else{
-            Prodotto cur = this.head;
-            Prodotto cur2;
 
-            //Alphabetical order sorting
-            while (cur.getNext() != null){
-                if (!(cur.compareTo(cur.getNext()) > 0)) {
+    if (this.head == null){
 
-                    cur = cur.getNext();
+        System.out.println("List empty, nothing to sort.");
 
-                }else{
-                    cur2 = cur.getNext();
+    } else {
 
+        Prodotto cur = this.head;
 
+        // Alphabetical order sorting
+        while (cur.getNext() != null) {
 
-                    if(cur == this.head) head = cur2;
-
-                    cur = this.head;
+            if (!(cur.compareTo(cur.getNext()) > 0)) {
+                cur = cur.getNext();
+            } else {
+                Prodotto cur2 = cur.getNext();
+                if (cur == this.head) {
+                    this.head = cur2;
                 }
+                swap(cur, cur2);
+                cur = this.head;
             }
-
-            cur = this.head; // reset cur to head
-
-            //Genere sorting
-            while (cur.getNext() != null){
-                if (cur.getGenere().equals(cur.getNext().getGenere())) {
-                    cur = cur.getNext();
-                }else{
-
-                }
-            }
-            this.tail = cur;
         }
 
+        // Genere sorting
+        cur = this.head;
+
+        while (cur.getNext() != null) {
+
+            if (cur.getGenere().compareToIgnoreCase(cur.getNext().getGenere()) <= 0) {
+                cur = cur.getNext();
+            } else {
+                Prodotto cur2 = cur.getNext();
+                if (cur == this.head) {
+                    this.head = cur2;
+                }
+                swap(cur, cur2);
+                cur = this.head;
+            }
+        }
+        this.tail = cur;
     }
+}
 
 @Override
 public String toString() {
