@@ -116,32 +116,28 @@ public class OrdinableList {
             System.out.println(
                     "Lista vuota, impossibile trovare " + name + "."
             );
-            return;}else {
-            //  Prodotto cur = this.head();
-
-            //TODO: metodo remove per togliere un prodotto dalla lista
+            return;
         }
 
         Prodotto cur = this.head;
 
-        while (cur != null && cur.getName() != name) {
+        //Search for the item to remove
+        while (cur != null && cur.getName().toLowerCase() != name.toLowerCase()) {
             cur = cur.getNext();
         }
-
+        
         if (cur == null) {
             System.out.println("Prodotto " + name + " non trovato.");
-            return;
-        }
-
-        if (cur == this.tail) {
+        }else if (cur == this.head) {
+            this.removeHead();
+        }else if (cur == this.tail) {
             this.removeTail();
-            return;
-        }
-
-        Prodotto previous = cur.getPrev();
-        Prodotto next = cur.getNext();
-        previous.setNext(next);
-        next.setPrev(previous);
+        }else{
+            Prodotto prev = cur.getPrev();
+            Prodotto next = cur.getNext();
+            previous.setNext(next);
+            next.setPrev(previous);
+        }   
     }
 
     /**
