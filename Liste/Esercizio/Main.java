@@ -4,7 +4,7 @@ public class Main {
         OrdinableList list = new OrdinableList();
         list.add("cookies", "sweets");
         list.add("Milk", "dairy");
-        list.add("Wrench", "mechanics");
+        list.add("wrench", "mechanics");
         list.add("milkyWay", "sweets");
         list.add("cheese", "dairy");
         list.add("bolt", "mechanics");
@@ -12,6 +12,9 @@ public class Main {
         list.sort();
 
         list.remove("wrench");
+        System.out.println(list);
+
+        list.clear();
         System.out.println(list);
     }
 }

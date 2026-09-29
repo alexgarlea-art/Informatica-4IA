@@ -78,17 +78,37 @@ public class Prodotto implements Comparable<Prodotto> {
 
 
     @Override
-    public String toString() {
-        if (this.getNext() == null) {
-            if (this.getPrev() == null) {
-                return "Prev: null " + " Value: " + this.getProduct() + " Next: null" + "\n";
-            } else {
-                return "Prev: " + this.getPrev().getProduct() + " Value: " + this.getProduct() + " Next: null" + "\n";
-            }
-        } else if (this.getPrev() == null) {
-            return "Prev: null " + " Value: " + this.getProduct() + " Next: " + this.getNext().getProduct() + "\n";
-        } else {
-            return "Prev: " + this.getPrev().getProduct() + " Value: " + this.getProduct() + " Next: " + this.getNext().getProduct() + "\n";
+public String toString() {
+    if(this.getNext() == null){
+        if(this.getPrev() == null){
+            return String.format(
+                "Prev: %-25s Value: %-25s Next: %-25s%n", // %...s = String, - = align left, 25 = n of characters to reserve for each %s
+                "null",
+                this.getProduct(),
+                "null"
+            );
+        }else{
+            return String.format(
+                "Prev: %-25s Value: %-25s Next: %-25s%n",
+                this.getPrev().getProduct(),
+                this.getProduct(),
+               "null"
+            );
         }
+    }else if(this.getPrev() == null){
+        return String.format(
+            "Prev: %-25s Value: %-25s Next: %-25s%n",
+            "null",
+            this.getProduct(),
+            this.getNext().getProduct()
+        );
+    }else{
+        return String.format(
+            "Prev: %-25s Value: %-25s Next: %-25s%n",
+            this.getPrev().getProduct(),
+            this.getProduct(),
+            this.getNext().getProduct()
+        );
     }
+}
 }

@@ -125,7 +125,7 @@ public class OrdinableList {
         while (cur != null && cur.getName().toLowerCase() != name.toLowerCase()) {
             cur = cur.getNext();
         }
-        
+
         if (cur == null) {
             System.out.println("Prodotto " + name + " non trovato.");
         }else if (cur == this.head) {
@@ -135,8 +135,8 @@ public class OrdinableList {
         }else{
             Prodotto prev = cur.getPrev();
             Prodotto next = cur.getNext();
-            previous.setNext(next);
-            next.setPrev(previous);
+            prev.setNext(next);
+            next.setPrev(prev);
         }   
     }
 
@@ -146,18 +146,19 @@ public class OrdinableList {
     public void clear() {
         if (head == null) {
             System.out.println("The list is empty.");
-        } else {
+        }else{
             Prodotto cur = this.head;
-            while (cur != null) {
+            while(cur != null){
                 if (cur.getPrev() != null) {
-                    cur.setPrev(null);
-                }
-                if (cur.getNext() != null) {
-                    cur = cur.getNext();
                     cur.getPrev().setNext(null);
+                    cur.setPrev(null);
+                }else{
+                    cur = cur.getNext();
                 }
             }
-            System.out.println("the list is clear.");
+            this.head = null;
+            this.tail = null;
+            System.out.println("the list has been cleared.");
         }
     }
 
@@ -237,9 +238,10 @@ public String toString() {
     }
 
     StringBuilder finalString = new StringBuilder();
-
-    finalString.append("Head: ").append(this.head.getName()).append(", ").append(this.head.getGenere()).append("\n");
-    finalString.append("Tail: ").append(this.tail.getName()).append(", ").append(this.tail.getGenere()).append("\n");
+    finalString.append("\n=========================\n");
+    finalString.append("Head: " + this.head.getName() + ": " + this.head.getGenere() + "\n");
+    finalString.append("Head: " + this.tail.getName() + ": " + this.tail.getGenere() + "\n");
+    finalString.append("=========================\n");
 
     Prodotto cur = this.head;
 
